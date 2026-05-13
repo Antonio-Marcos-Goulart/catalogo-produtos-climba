@@ -22,7 +22,7 @@ app.use("/api", router);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "API de To-Do List rodando. Acesse /swagger para documentação ou /api para endpoints.",
+    message: "API de Gerenciamento de estoque rodando. Acesse /swagger para documentação ou /api para endpoints.",
   });
 });
 

@@ -4,6 +4,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 
 import { Categoria } from "../models/categoria/Categoria";
+import { MovimentacaoEstoque } from "../models/movimentacao/MovimentacaoEstoque";
 import { Produto } from "../models/produto/Produto";
 
 dotenv.config({
@@ -19,7 +20,7 @@ const database = new DataSource({
   password: process.env.DB_PASSWORD || "",
   ssl: process.env.DB_SSL === "true",
 
-  entities: [Categoria, Produto],
+  entities: [Categoria, Produto, MovimentacaoEstoque],
 
   synchronize:
     process.env.DB_SYNCHRONIZE === "true" || process.env.NODE_ENV !== "production",
