@@ -4,12 +4,12 @@ import express from "express";
 import path from "node:path";
 import swaggerUi from "swagger-ui-express";
 
-import { initializeDatabase } from "./src/config/database";
+import { initializeDatabase } from "./src/config/Database";
 import { swaggerSpec } from "./src/config/Swagger";
 import { router } from "./src/routes/index"
 
 dotenv.config({
-  path: path.resolve(__dirname, "../.env"),
+  path: path.resolve(__dirname, "./.env"),
 });
 
 const app = express();
