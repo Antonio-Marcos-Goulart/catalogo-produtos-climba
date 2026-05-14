@@ -1,5 +1,7 @@
 import swaggerJsdoc from "swagger-jsdoc";
 
+import { swaggerSchemas } from "../docs/swagger";
+
 const swaggerSpec = swaggerJsdoc({
   definition: {
     openapi: "3.0.0",
@@ -10,11 +12,13 @@ const swaggerSpec = swaggerJsdoc({
     tags: [
       { name: "Categorias" },
       { name: "Produtos" },
-      { name: "Movimentacoes de Estoque" },
+      { name: "Movimentações de Estoque" },
     ],
-    components: {},
+    components: {
+      schemas: swaggerSchemas,
+    },
   },
   apis: ["./src/routes/**/*.ts"],
 });
 
-export { swaggerSpec };
+export { swaggerSchemas, swaggerSpec };
