@@ -7,4 +7,11 @@ const idParamSchema = z.object({
     .positive("O id deve ser um número positivo."),
 });
 
-export { idParamSchema };
+const nomeParamSchema = z.object({
+  nome: z
+    .string()
+    .trim()
+    .min(1, "O nome deve ser informado."),
+});
+
+export { idParamSchema, nomeParamSchema };
