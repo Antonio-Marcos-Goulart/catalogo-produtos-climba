@@ -5,7 +5,6 @@ import fs from "node:fs";
 import path from "node:path";
 import swaggerUi from "swagger-ui-express";
 
-import { ensureDefaultUser } from "./src/config/Bootstrap";
 import { initializeDatabase } from "./src/config/Database";
 import { swaggerSpec } from "./src/config/Swagger";
 import { errorHandler } from "./src/middlewares/ErrorHandler";
@@ -54,7 +53,6 @@ app.get("/app", (_req, res) => {
 
 async function startServer(): Promise<void> {
   await initializeDatabase();
-  await ensureDefaultUser();
 
   app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
