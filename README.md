@@ -72,6 +72,46 @@ A base do projeto foi desenvolvida seguindo o modelo aplicado anteriormente no D
 - `backend`: responsável pela API, autenticação, validações, regras de negócio e persistência dos dados
 - `frontend`: responsável pela interface e consumo dos endpoints da API
 
+## Modelo relacional
+
+```mermaid
+erDiagram
+    CATEGORIAS {
+        int id
+        string nome
+    }
+
+    PRODUTO {
+        int id
+        string nome_produto
+        string descricao_produto
+        int categoria_id
+        int estoque_disponivel
+        decimal preco
+    }
+
+    MOVIMENTACOES_ESTOQUE {
+        int id
+        string tipo
+        int quantidade
+        string observacao
+        date data_movimentacao
+        int produto_id
+        boolean revertida
+    }
+
+    USUARIOS {
+        int id
+        string nome
+        string email
+        string senha
+        date criado_em
+    }
+
+    CATEGORIAS ||--o{ PRODUTO : possui
+    PRODUTO ||--o{ MOVIMENTACOES_ESTOQUE : registra
+```
+
 ## Documentação da API
 
 A documentação da API está disponível via Swagger na rota:
