@@ -6,6 +6,7 @@ import { DataSource } from "typeorm";
 import { Categoria } from "../models/categoria/Categoria";
 import { MovimentacaoEstoque } from "../models/movimentacao/MovimentacaoEstoque";
 import { Produto } from "../models/produto/Produto";
+import { Usuario } from "../models/usuario/Usuario";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../.env"),
@@ -20,7 +21,7 @@ const database = new DataSource({
   password: process.env.DB_PASSWORD || "",
   ssl: process.env.DB_SSL === "true",
 
-  entities: [Categoria, Produto, MovimentacaoEstoque],
+  entities: [Categoria, Produto, MovimentacaoEstoque, Usuario],
 
   synchronize:
     process.env.DB_SYNCHRONIZE === "true" || process.env.NODE_ENV !== "production",
