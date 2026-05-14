@@ -1,3 +1,5 @@
+import { ILike } from "typeorm";
+
 import { database } from "../../config/Database";
 import { Categoria } from "../../models/categoria/Categoria";
 import { Produto } from "../../models/produto/Produto";
@@ -33,9 +35,14 @@ class ProdutoRepository {
 
   findByNome(nome_produto: string): Promise<Produto | null> {
     return this.repository.findOne({
-      where: { nome_produto },
+      where: {
+        nome_produto: ILike(nome_produto.trim()),
+      },
       relations: {
         categoria: true,
+      },
+      order: {
+        nome_produto: "ASC",
       },
     });
   }

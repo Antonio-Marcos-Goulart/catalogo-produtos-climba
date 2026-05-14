@@ -53,7 +53,17 @@ class ProdutoService {
     const produto = await produtoRepository.findById(id);
 
     if (!produto) {
-      throw new ProdutoNotFoundError("Produto não encontrado");
+      throw new ProdutoNotFoundError("Produto não encontrado.");
+    }
+
+    return produto;
+  }
+
+  async findByNomeProduto(nome_produto: string) {
+    const produto = await produtoRepository.findByNome(nome_produto);
+
+    if (!produto) {
+      throw new ProdutoNotFoundError("Produto não encontrado.");
     }
 
     return produto;
@@ -87,6 +97,9 @@ class ProdutoService {
 
 const produtoService = new ProdutoService();
 
-export { ProdutoCategoriaNotFoundError, ProdutoConflictError,
-  ProdutoNotFoundError, produtoService,
+export {
+  ProdutoCategoriaNotFoundError,
+  ProdutoConflictError,
+  ProdutoNotFoundError,
+  produtoService,
 };
