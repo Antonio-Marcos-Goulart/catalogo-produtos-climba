@@ -81,7 +81,7 @@ function renderDashboard({ produtos, movimentacoes }) {
 
   if (!lowStockProducts.length) {
     elements.listaEstoqueBaixo.innerHTML =
-      '<p class="empty-state">Nenhum produto com estoque critico.</p>';
+      '<p class="empty-state">Nenhum produto com estoque crítico.</p>';
   } else {
     elements.listaEstoqueBaixo.innerHTML = lowStockProducts
       .map(
@@ -114,14 +114,14 @@ function renderDashboard({ produtos, movimentacoes }) {
 
   if (!categoryItems.length) {
     elements.listaCategoriasResumo.innerHTML =
-      '<p class="empty-state">Cadastre produtos para ver a distribuicao por categoria.</p>';
+      '<p class="empty-state">Cadastre produtos para ver a distribuição por categoria.</p>';
   } else {
     elements.listaCategoriasResumo.innerHTML = categoryItems.join("");
   }
 
   if (!recentMovements.length) {
     elements.listaMovimentacoesRecentes.innerHTML =
-      '<p class="empty-state">Nenhuma movimentacao recente.</p>';
+      '<p class="empty-state">Nenhuma movimentação recente.</p>';
   } else {
     elements.listaMovimentacoesRecentes.innerHTML = recentMovements
       .map(
@@ -164,7 +164,7 @@ async function refreshAll() {
 
     setFeedback(
       elements.movimentacaoFeedback,
-      error.message || "Nao foi possivel carregar os dados da API.",
+      error.message || "Não foi possível carregar os dados da API.",
       "error",
     );
   }

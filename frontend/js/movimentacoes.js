@@ -36,7 +36,7 @@ function isMovimentacaoDeReversao(observacao) {
 
 function renderizarMovimentacoes(movimentacoes, tbody) {
   if (!movimentacoes.length) {
-    tbody.innerHTML = createEmptyRow("Nenhuma movimentacao registrada.", 8);
+    tbody.innerHTML = createEmptyRow("Nenhuma movimentação registrada.", 8);
     return;
   }
 
@@ -61,7 +61,7 @@ function renderizarMovimentacoes(movimentacoes, tbody) {
             ${
               canRevert
                 ? `<button class="button button--ghost button--small" data-acao="reverter-movimentacao" data-id="${movimentacao.id}" type="button">Reverter</button>`
-                : `<span class="empty-state">Sem acao</span>`
+                : `<span class="empty-state">Sem ação</span>`
             }
           </td>
         </tr>
@@ -77,7 +77,7 @@ function bindMovimentacaoActions({ form, feedback, tbody, refreshAll }) {
     try {
       await criarMovimentacao(form);
       form.reset();
-      setFeedback(feedback, "Movimentacao registrada com sucesso.", "success");
+      setFeedback(feedback, "Movimentação registrada com sucesso.", "success");
       await refreshAll();
     } catch (error) {
       setFeedback(feedback, error.message, "error");
@@ -105,7 +105,7 @@ function bindMovimentacaoActions({ form, feedback, tbody, refreshAll }) {
       target.textContent = "Revertendo...";
 
       await reverterMovimentacao(target.dataset.id);
-      setFeedback(feedback, "Movimentacao revertida com sucesso.", "success");
+      setFeedback(feedback, "Movimentação revertida com sucesso.", "success");
       await refreshAll();
     } catch (error) {
       target.disabled = false;

@@ -24,7 +24,7 @@ async function request(path, options = {}) {
       ...options,
     });
   } catch (_error) {
-    throw new Error("Nao foi possivel conectar com o backend em http://localhost:3000.");
+    throw new Error("Não foi possível conectar com o backend em http://localhost:3000.");
   }
 
   if (response.status === 204) {
@@ -45,7 +45,7 @@ async function request(path, options = {}) {
       clearAuth();
     }
 
-    const fallbackMessage = responseText || "Nao foi possivel concluir a solicitacao.";
+    const fallbackMessage = responseText || "Não foi possível concluir a solicitação.";
     const error = new Error(data?.message || fallbackMessage);
     error.status = response.status;
     throw error;
