@@ -69,4 +69,6 @@ class ProdutoRepository {
   }
 }
 
-export { ProdutoRepository };
+const produtoRepository = new ProdutoRepository();
+
+export { ProdutoRepository, produtoRepository };

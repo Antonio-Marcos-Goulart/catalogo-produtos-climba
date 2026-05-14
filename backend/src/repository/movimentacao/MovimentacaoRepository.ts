@@ -61,4 +61,6 @@ class MovimentacaoRepository {
   }
 }
 
-export { MovimentacaoRepository };
+const movimentacaoRepository = new MovimentacaoRepository();
+
+export { MovimentacaoRepository, movimentacaoRepository };

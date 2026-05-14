@@ -44,4 +44,6 @@ class CategoriaRepository {
 
 }
 
-export { CategoriaRepository };
+const categoriaRepository = new CategoriaRepository();
+
+export { CategoriaRepository, categoriaRepository };
