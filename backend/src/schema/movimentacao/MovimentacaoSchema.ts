@@ -19,16 +19,7 @@ const createMovimentacaoSchema = z.object({
     .positive("O id do produto deve ser um número positivo."),
 });
 
-
-const updateMovimentacaoSchema = createMovimentacaoSchema
-  .partial()
-  .refine((data) => Object.keys(data).length > 0, {
-    message: "Informe ao menos um campo para atualizar a movimentação.",
-  });
-
 export {
   createMovimentacaoSchema,
-  updateMovimentacaoSchema,
 };
 export type CreateMovimentacaoInput = z.infer<typeof createMovimentacaoSchema>;
-export type UpdateMovimentacaoInput = z.infer<typeof updateMovimentacaoSchema>;

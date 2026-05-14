@@ -1,7 +1,7 @@
 import { database } from "../../config/Database";
 import { MovimentacaoEstoque } from "../../models/movimentacao/MovimentacaoEstoque";
 import { Produto } from "../../models/produto/Produto";
-import { CreateMovimentacaoInput,UpdateMovimentacaoInput, } from "../../schema/movimentacao/MovimentacaoSchema";
+import { CreateMovimentacaoInput } from "../../schema/movimentacao/MovimentacaoSchema";
 
 class MovimentacaoRepository {
   private get repository() {
@@ -40,22 +40,6 @@ class MovimentacaoRepository {
       },
     });
   }
-
-  merge(
-    movimentacao: MovimentacaoEstoque,
-    data: UpdateMovimentacaoInput,
-  ): MovimentacaoEstoque {
-    const { produto_id, ...movimentacaoData } = data;
-
-    return Object.assign(movimentacao, {
-      ...movimentacaoData,
-      tipo: data.tipo ?? movimentacao.tipo,
-      quantidade: data.quantidade ?? movimentacao.quantidade,
-      observacao: data.observacao ?? movimentacao.observacao,
-      produto: produto_id ? ({ id: produto_id } as Produto) : movimentacao.produto,
-    });
-  }
-
   remove(movimentacao: MovimentacaoEstoque): Promise<MovimentacaoEstoque> {
     return this.repository.remove(movimentacao);
   }
