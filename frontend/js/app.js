@@ -46,7 +46,7 @@ const elements = {
 };
 
 function redirectToLogin() {
-  window.location.href = "./login.html";
+  window.location.href = "/login";
 }
 
 function showAppScreen(usuario) {

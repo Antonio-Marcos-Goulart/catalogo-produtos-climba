@@ -2,7 +2,22 @@ import type { NextFunction, Request, Response } from "express";
 import { QueryFailedError } from "typeorm";
 
 function getDatabaseErrorMessage(error: QueryFailedError): string {
-  const driverError = error.driverError as { code?: string; detail?: string } | undefined;
+  const driverError = error.driverError as {
+    code?: string;
+    detail?: string;
+    constraint?: string;
+  } | undefined;
+
+  if (driverError?.code === "23505") {
+    if (
+      driverError.constraint === "UQ_97672ac88f789774dd47f7c8be3" ||
+      driverError.detail?.includes("(email)")
+    ) {
+      return "Ja existe um usuario cadastrado com este email.";
+    }
+
+    return driverError.detail || "Ja existe um registro com estes dados.";
+  }
 
   if (driverError?.code === "23503") {
     return "Nao foi possivel remover este registro porque ele possui vinculos ativos.";

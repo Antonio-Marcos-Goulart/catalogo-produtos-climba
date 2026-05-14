@@ -7,7 +7,7 @@ const elements = {
 };
 
 function redirectToApp() {
-  window.location.href = "./index.html";
+  window.location.href = "/app";
 }
 
 bindLoginForm({
