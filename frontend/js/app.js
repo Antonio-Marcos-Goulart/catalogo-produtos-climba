@@ -31,6 +31,9 @@ const elements = {
   produtoFeedback: document.querySelector("#produto-feedback"),
   produtoTableBody: document.querySelector("#lista-produtos"),
   produtoCategoriaSelect: document.querySelector("#produto-categoria"),
+  produtoIdInput: document.querySelector("#produto-id"),
+  produtoSubmitButton: document.querySelector("#produto-submit"),
+  produtoCancelButton: document.querySelector("#produto-cancelar"),
   movimentacaoForm: document.querySelector("#form-movimentacao"),
   movimentacaoFeedback: document.querySelector("#movimentacao-feedback"),
   movimentacaoTableBody: document.querySelector("#lista-movimentacoes"),
@@ -156,6 +159,8 @@ async function refreshAll() {
     preencherSelectProdutos(produtos, elements.movimentacaoProdutoSelect);
     atualizarResumo({ categorias, produtos, movimentacoes });
     renderDashboard({ produtos, movimentacoes });
+    produtoActions.setProducts(produtos);
+    return { categorias, produtos, movimentacoes };
   } catch (error) {
     if (error.status === 401) {
       redirectToLogin();
@@ -177,11 +182,14 @@ bindCategoriaActions({
   refreshAll,
 });
 
-bindProdutoActions({
+const produtoActions = bindProdutoActions({
   form: elements.produtoForm,
   feedback: elements.produtoFeedback,
   tbody: elements.produtoTableBody,
   refreshAll,
+  idInput: elements.produtoIdInput,
+  submitButton: elements.produtoSubmitButton,
+  cancelButton: elements.produtoCancelButton,
 });
 
 bindMovimentacaoActions({

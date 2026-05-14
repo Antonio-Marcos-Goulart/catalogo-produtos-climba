@@ -115,6 +115,7 @@
           </div>
 
           <form class="form-grid form-grid--two-columns" id="form-produto">
+            <input id="produto-id" name="id" type="hidden" />
             <label class="field">
               <span>Nome do produto</span>
               <input id="produto-nome" name="nome_produto" type="text" placeholder="Ex: Notebook" required />
@@ -143,7 +144,12 @@
                 <option value="">Selecione uma categoria</option>
               </select>
             </label>
-            <button class="button field--full" type="submit">Salvar produto</button>
+            <div class="form-actions field--full">
+              <button class="button" id="produto-submit" type="submit">Salvar produto</button>
+              <button class="button button--ghost is-hidden" id="produto-cancelar" type="button">
+                Cancelar edição
+              </button>
+            </div>
           </form>
 
           <p class="feedback" id="produto-feedback"></p>

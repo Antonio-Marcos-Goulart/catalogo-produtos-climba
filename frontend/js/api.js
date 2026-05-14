@@ -65,10 +65,17 @@ function post(endpoint, body) {
   });
 }
 
+function put(endpoint, body) {
+  return request(endpoint, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+}
+
 function remove(endpoint) {
   return request(endpoint, {
     method: "DELETE",
   });
 }
 
-export { get, post, remove };
+export { get, post, put, remove };
