@@ -1,6 +1,5 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -23,16 +22,10 @@ class Produto {
   descricao_produto!: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  valor!: string;
+  preco!: string;
 
   @Column({ type: 'integer' })
   estoque_disponivel!: number;
-
-  @Column({ type: 'boolean', default: true })
-  ativo!: boolean;
-
-  @CreateDateColumn({ type: 'timestamp with time zone', name: 'produto_cadastrado_em' })
-  criadoEm!: Date;
 
   @ManyToOne(() => Categoria, (categoria) => categoria.produtos, { nullable: false })
   @JoinColumn({ name: 'categoria_id' })
