@@ -1,9 +1,11 @@
+import { getAuth } from "./auth.js";
 import {
   bindCategoriaActions,
   carregarCategorias,
   preencherSelectCategorias,
   renderizarCategorias,
 } from "./categorias.js";
+import { loadAuthenticatedUser, logout } from "./login.js";
 import {
   bindMovimentacaoActions,
   carregarMovimentacoes,
@@ -19,6 +21,9 @@ import {
 import { formatDateTime, setFeedback } from "./utils.js";
 
 const elements = {
+  appShell: document.querySelector("#app-shell"),
+  authUserName: document.querySelector("#auth-user-name"),
+  logoutButton: document.querySelector("#logout-button"),
   categoriaForm: document.querySelector("#form-categoria"),
   categoriaFeedback: document.querySelector("#categoria-feedback"),
   categoriaTableBody: document.querySelector("#lista-categorias"),
@@ -39,6 +44,15 @@ const elements = {
   listaCategoriasResumo: document.querySelector("#lista-categorias-resumo"),
   listaMovimentacoesRecentes: document.querySelector("#lista-movimentacoes-recentes"),
 };
+
+function redirectToLogin() {
+  window.location.href = "./login.html";
+}
+
+function showAppScreen(usuario) {
+  elements.appShell.classList.remove("is-hidden");
+  elements.authUserName.textContent = usuario?.nome || getAuth()?.usuario?.nome || "";
+}
 
 function atualizarResumo({ categorias, produtos, movimentacoes }) {
   const lowStockProducts = produtos.filter(
@@ -85,18 +99,18 @@ function renderDashboard({ produtos, movimentacoes }) {
   }
 
   const categoryItems = Object.entries(productsByCategory)
-      .sort((first, second) => second[1] - first[1])
-      .map(
-        ([categoryName, total]) => `
-          <div class="insight-item">
-            <div>
-              <strong>${categoryName}</strong>
-              <small>Produtos cadastrados</small>
-            </div>
-            <span class="insight-item__value">${total}</span>
+    .sort((first, second) => second[1] - first[1])
+    .map(
+      ([categoryName, total]) => `
+        <div class="insight-item">
+          <div>
+            <strong>${categoryName}</strong>
+            <small>Produtos cadastrados</small>
           </div>
-        `,
-      );
+          <span class="insight-item__value">${total}</span>
+        </div>
+      `,
+    );
 
   if (!categoryItems.length) {
     elements.listaCategoriasResumo.innerHTML =
@@ -143,6 +157,11 @@ async function refreshAll() {
     atualizarResumo({ categorias, produtos, movimentacoes });
     renderDashboard({ produtos, movimentacoes });
   } catch (error) {
+    if (error.status === 401) {
+      redirectToLogin();
+      return;
+    }
+
     setFeedback(
       elements.movimentacaoFeedback,
       error.message || "Nao foi possivel carregar os dados da API.",
@@ -172,4 +191,21 @@ bindMovimentacaoActions({
   refreshAll,
 });
 
-void refreshAll();
+elements.logoutButton.addEventListener("click", () => {
+  logout();
+  redirectToLogin();
+});
+
+async function bootstrap() {
+  const usuario = await loadAuthenticatedUser();
+
+  if (!usuario) {
+    redirectToLogin();
+    return;
+  }
+
+  showAppScreen(usuario);
+  await refreshAll();
+}
+
+void bootstrap();

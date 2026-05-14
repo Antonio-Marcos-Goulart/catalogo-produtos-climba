@@ -12,6 +12,7 @@
   --accent-strong: #1751a8;
   --danger: #d31200;
   --success: #1f9d72;
+  --shadow: 0 18px 40px rgba(19, 44, 74, 0.08);
   --radius: 20px;
   --radius-small: 12px;
   --font-title: "Poppins", "Segoe UI", sans-serif;
@@ -38,4 +39,8 @@ select {
 
 button {
   cursor: pointer;
+}
+
+.is-hidden {
+  display: none;
 }

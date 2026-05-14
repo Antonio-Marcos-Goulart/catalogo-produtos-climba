@@ -8,249 +8,221 @@
     <link rel="stylesheet" href="./css/dashboard.css" />
   </head>
   <body>
-    <header class="hero">
-      <div class="hero__content">
+    <section class="app-shell" id="app-shell">
+      <header class="hero">
+        <div class="hero__content">
         <h1 class="hero__title">Gerenciamento de estoque</h1>
-      </div>
-    </header>
+        </div>
+        <div class="hero__actions">
+          <span class="hero__user" id="auth-user-name"></span>
+          <button class="button button--ghost" id="logout-button" type="button">Sair</button>
+        </div>
+      </header>
 
-    <main class="dashboard">
-      <section class="panel panel--highlight">
-        <div class="panel__header">
-          <div>
-            <h2 class="panel__title">Visão geral</h2>
-          </div>
-        </div>
-        <div class="summary-grid">
-          <article class="summary-card">
-            <span class="summary-card__label">Categorias</span>
-            <strong class="summary-card__value" id="total-categorias">0</strong>
-          </article>
-          <article class="summary-card">
-            <span class="summary-card__label">Produtos</span>
-            <strong class="summary-card__value" id="total-produtos">0</strong>
-          </article>
-          <article class="summary-card">
-            <span class="summary-card__label">Movimentações</span>
-            <strong class="summary-card__value" id="total-movimentacoes">0</strong>
-          </article>
-          <article class="summary-card summary-card--alert">
-            <span class="summary-card__label">Estoque baixo</span>
-            <strong class="summary-card__value" id="total-estoque-baixo">0</strong>
-          </article>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel__header">
-          <div>
-            <h2 class="panel__title">Dashboard</h2>
-          </div>
-        </div>
-        <div class="insights-grid">
-          <article class="insight-card insight-card--warning">
-            <div class="insight-card__header">
-              <h3>Produtos com estoque baixo:</h3>
-              <span class="pill pill--revertida" id="badge-estoque-baixo">0 itens</span>
+      <main class="dashboard">
+        <section class="panel panel--highlight">
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Visao geral</h2>
             </div>
-            <div class="insight-list" id="lista-estoque-baixo"></div>
-          </article>
+          </div>
+          <div class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-card__label">Categorias</span>
+              <strong class="summary-card__value" id="total-categorias">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-card__label">Produtos</span>
+              <strong class="summary-card__value" id="total-produtos">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-card__label">Movimentacoes</span>
+              <strong class="summary-card__value" id="total-movimentacoes">0</strong>
+            </article>
+            <article class="summary-card summary-card--alert">
+              <span class="summary-card__label">Estoque baixo</span>
+              <strong class="summary-card__value" id="total-estoque-baixo">0</strong>
+            </article>
+          </div>
+        </section>
 
-          <article class="insight-card">
-            <div class="insight-card__header">
-              <h3>Produtos cadastrados por categoria:</h3>
+        <section class="panel">
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Dashboard</h2>
             </div>
-            <div class="insight-list" id="lista-categorias-resumo"></div>
-          </article>
+          </div>
+          <div class="insights-grid">
+            <article class="insight-card insight-card--warning">
+              <div class="insight-card__header">
+                <h3>Produtos com estoque baixo</h3>
+                <span class="pill pill--revertida" id="badge-estoque-baixo">0 itens</span>
+              </div>
+              <div class="insight-list" id="lista-estoque-baixo"></div>
+            </article>
 
-          <article class="insight-card">
-            <div class="insight-card__header">
-              <h3>Movimentações:</h3>
+            <article class="insight-card">
+              <div class="insight-card__header">
+                <h3>Produtos cadastrados por categoria</h3>
+              </div>
+              <div class="insight-list" id="lista-categorias-resumo"></div>
+            </article>
+
+            <article class="insight-card">
+              <div class="insight-card__header">
+                <h3>Movimentacoes recentes</h3>
+              </div>
+              <div class="insight-list" id="lista-movimentacoes-recentes"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="categorias">
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Cadastro de categorias</h2>
             </div>
-            <div class="insight-list" id="lista-movimentacoes-recentes"></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="panel" id="categorias">
-        <div class="panel__header">
-          <div>
-            <h2 class="panel__title">Cadastro de Categorias</h2>
           </div>
-        </div>
 
-        <form class="form-grid" id="form-categoria">
-          <label class="field">
-            <span>Nome da categoria</span>
-            <input
-              id="categoria-nome"
-              name="nome"
-              type="text"
-              placeholder="Ex: Eletrônicos"
-              required
-            />
-          </label>
-          <button class="button" type="submit">Salvar categoria</button>
-        </form>
+          <form class="form-grid" id="form-categoria">
+            <label class="field">
+              <span>Nome da categoria</span>
+              <input id="categoria-nome" name="nome" type="text" placeholder="Ex: Eletronicos" required />
+            </label>
+            <button class="button" type="submit">Salvar categoria</button>
+          </form>
 
-        <p class="feedback" id="categoria-feedback"></p>
-        <div class="table-wrapper">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Ação</th>
-              </tr>
-            </thead>
-            <tbody id="lista-categorias"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" id="produtos">
-        <div class="panel__header">
-          <div>
-            <h2 class="panel__title">Cadastro de Produtos</h2>
+          <p class="feedback" id="categoria-feedback"></p>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Acao</th>
+                </tr>
+              </thead>
+              <tbody id="lista-categorias"></tbody>
+            </table>
           </div>
-        </div>
+        </section>
 
-        <form class="form-grid form-grid--two-columns" id="form-produto">
-          <label class="field">
-            <span>Nome do produto</span>
-            <input
-              id="produto-nome"
-              name="nome_produto"
-              type="text"
-              placeholder="Ex: Notebook"
-              required
-            />
-          </label>
-          <label class="field">
-            <span>Preco</span>
-            <input
-              id="produto-preco"
-              name="preco"
-              type="number"
-              min="0.01"
-              step="0.01"
-              placeholder="0.00"
-              required
-            />
-          </label>
-          <label class="field field--full">
-            <span>Descrição</span>
-            <input
-              id="produto-descricao"
-              name="descricao_produto"
-              type="text"
-              placeholder="Descreva o produto"
-              required
-            />
-          </label>
-          <label class="field">
-            <span>Estoque inicial</span>
-            <input
-              id="produto-estoque"
-              name="estoque_disponivel"
-              type="number"
-              min="0"
-              step="1"
-              placeholder="0"
-              required
-            />
-          </label>
-          <label class="field">
-            <span>Categoria</span>
-            <select id="produto-categoria" name="categoria_id" required>
-              <option value="">Selecione uma categoria</option>
-            </select>
-          </label>
-          <button class="button field--full" type="submit">Salvar produto</button>
-        </form>
-
-        <p class="feedback" id="produto-feedback"></p>
-        <div class="table-wrapper">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Produto</th>
-                <th>Categoria</th>
-                <th>Preço</th>
-                <th>Estoque</th>
-                <th>Ação</th>
-              </tr>
-            </thead>
-            <tbody id="lista-produtos"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" id="movimentacoes">
-        <div class="panel__header">
-          <div>
-            <h2 class="panel__title">Movimentações no Estoque</h2>
+        <section class="panel" id="produtos">
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Cadastro de produtos</h2>
+            </div>
           </div>
-        </div>
 
-        <form class="form-grid form-grid--two-columns" id="form-movimentacao">
-          <label class="field">
-            <span>Produto</span>
-            <select id="movimentacao-produto" name="produto_id" required>
-              <option value="">Selecione um produto</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Tipo</span>
-            <select id="movimentacao-tipo" name="tipo" required>
-              <option value="entrada">Entrada</option>
-              <option value="saida">Saída</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Quantidade</span>
-            <input
-              id="movimentacao-quantidade"
-              name="quantidade"
-              type="number"
-              min="1"
-              step="1"
-              placeholder="1"
-              required
-            />
-          </label>
-          <label class="field">
-            <span>Observação</span>
-            <input
-              id="movimentacao-observacao"
-              name="observacao"
-              type="text"
-              placeholder="Opcional"
-            />
-          </label>
-          <button class="button field--full" type="submit">Registrar movimentação</button>
-        </form>
+          <form class="form-grid form-grid--two-columns" id="form-produto">
+            <label class="field">
+              <span>Nome do produto</span>
+              <input id="produto-nome" name="nome_produto" type="text" placeholder="Ex: Notebook" required />
+            </label>
+            <label class="field">
+              <span>Preco</span>
+              <input id="produto-preco" name="preco" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+            </label>
+            <label class="field field--full">
+              <span>Descricao</span>
+              <input
+                id="produto-descricao"
+                name="descricao_produto"
+                type="text"
+                placeholder="Descreva o produto"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>Estoque inicial</span>
+              <input id="produto-estoque" name="estoque_disponivel" type="number" min="0" step="1" placeholder="0" required />
+            </label>
+            <label class="field">
+              <span>Categoria</span>
+              <select id="produto-categoria" name="categoria_id" required>
+                <option value="">Selecione uma categoria</option>
+              </select>
+            </label>
+            <button class="button field--full" type="submit">Salvar produto</button>
+          </form>
 
-        <p class="feedback" id="movimentacao-feedback"></p>
-        <div class="table-wrapper">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Produto</th>
-                <th>Tipo</th>
-                <th>Quantidade</th>
-                <th>Data</th>
-                <th>Status</th>
-                <th>Ação</th>
-              </tr>
-            </thead>
-            <tbody id="lista-movimentacoes"></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
+          <p class="feedback" id="produto-feedback"></p>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Produto</th>
+                  <th>Categoria</th>
+                  <th>Preco</th>
+                  <th>Estoque</th>
+                  <th>Acao</th>
+                </tr>
+              </thead>
+              <tbody id="lista-produtos"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="movimentacoes">
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Movimentacoes no estoque</h2>
+            </div>
+          </div>
+
+          <form class="form-grid form-grid--two-columns" id="form-movimentacao">
+            <label class="field">
+              <span>Produto</span>
+              <select id="movimentacao-produto" name="produto_id" required>
+                <option value="">Selecione um produto</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Tipo</span>
+              <select id="movimentacao-tipo" name="tipo" required>
+                <option value="entrada">Entrada</option>
+                <option value="saida">Saida</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Quantidade</span>
+              <input id="movimentacao-quantidade" name="quantidade" type="number" min="1" step="1" placeholder="1" required />
+            </label>
+            <label class="field">
+              <span>Observacao</span>
+              <input
+                class="input--small"
+                id="movimentacao-observacao"
+                name="observacao"
+                type="text"
+                placeholder="Opcional"
+              />
+            </label>
+            <button class="button field--full" type="submit">Registrar movimentacao</button>
+          </form>
+
+          <p class="feedback" id="movimentacao-feedback"></p>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Produto</th>
+                  <th>Tipo</th>
+                  <th>Quantidade</th>
+                  <th>Observacao</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th>Acao</th>
+                </tr>
+              </thead>
+              <tbody id="lista-movimentacoes"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </section>
 
     <script type="module" src="./js/app.js"></script>
   </body>

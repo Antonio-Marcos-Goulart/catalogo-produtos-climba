@@ -36,7 +36,7 @@ function isMovimentacaoDeReversao(observacao) {
 
 function renderizarMovimentacoes(movimentacoes, tbody) {
   if (!movimentacoes.length) {
-    tbody.innerHTML = createEmptyRow("Nenhuma movimentacao registrada.", 7);
+    tbody.innerHTML = createEmptyRow("Nenhuma movimentacao registrada.", 8);
     return;
   }
 
@@ -54,6 +54,7 @@ function renderizarMovimentacoes(movimentacoes, tbody) {
           <td>${movimentacao.produto?.nome_produto || "-"}</td>
           <td><span class="pill ${tipoClass}">${movimentacao.tipo}</span></td>
           <td>${movimentacao.quantidade}</td>
+          <td>${movimentacao.observacao || "-"}</td>
           <td>${formatDateTime(movimentacao.dataMovimentacao)}</td>
           <td><span class="pill ${statusClass}">${statusText}</span></td>
           <td>

@@ -1,3 +1,5 @@
+import { clearAuth, getToken } from "./auth.js";
+
 function resolveApiBaseUrl() {
   if (window.location.protocol === "file:") {
     return "http://localhost:3000/api";
@@ -10,11 +12,13 @@ const API_BASE_URL = resolveApiBaseUrl();
 
 async function request(path, options = {}) {
   let response;
+  const token = getToken();
 
   try {
     response = await fetch(`${API_BASE_URL}${path}`, {
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(options.headers || {}),
       },
       ...options,
@@ -37,6 +41,10 @@ async function request(path, options = {}) {
   }
 
   if (!response.ok) {
+    if (response.status === 401) {
+      clearAuth();
+    }
+
     const fallbackMessage = responseText || "Nao foi possivel concluir a solicitacao.";
     const error = new Error(data?.message || fallbackMessage);
     error.status = response.status;
