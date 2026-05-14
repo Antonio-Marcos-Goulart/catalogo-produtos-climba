@@ -10,11 +10,19 @@ const swaggerSpec = swaggerJsdoc({
       version: "1.0.0",
     },
     tags: [
+      { name: "Autenticacao" },
       { name: "Categorias" },
       { name: "Produtos" },
-      { name: "Movimentações de Estoque" },
+      { name: "Movimentacoes de Estoque" },
     ],
     components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
       schemas: swaggerSchemas,
     },
   },
