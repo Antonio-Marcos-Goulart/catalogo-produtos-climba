@@ -23,6 +23,9 @@ class MovimentacaoEstoque {
   @Column({ type: 'text', nullable: true })
   observacao?: string;
 
+  @Column({ type: 'boolean', default: false })
+  revertida!: boolean;
+
   @CreateDateColumn({ type: 'timestamp with time zone', name: 'data_movimentacao' })
   dataMovimentacao!: Date;
 

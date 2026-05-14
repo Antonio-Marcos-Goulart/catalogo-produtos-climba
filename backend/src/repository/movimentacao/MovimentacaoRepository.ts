@@ -40,9 +40,6 @@ class MovimentacaoRepository {
       },
     });
   }
-  remove(movimentacao: MovimentacaoEstoque): Promise<MovimentacaoEstoque> {
-    return this.repository.remove(movimentacao);
-  }
 }
 
 const movimentacaoRepository = new MovimentacaoRepository();
