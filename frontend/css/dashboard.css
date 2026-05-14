@@ -1,0 +1,378 @@
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px 24px 20px;
+  align-items: end;
+}
+
+.hero__content {
+  max-width: 640px;
+}
+
+.hero__eyebrow,
+.panel__eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero__title,
+.panel__title {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.hero__title {
+  font-size: clamp(2.2rem, 4vw, 4rem);
+}
+
+.hero__description {
+  margin: 16px 0 0;
+  max-width: 560px;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--success);
+  border-radius: 50%;
+}
+
+/* Estrutura geral das secoes */
+.dashboard {
+  display: grid;
+  gap: 24px;
+  padding: 12px 24px 40px;
+}
+
+.panel {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.panel--highlight {
+  background: #eef5ff;
+}
+
+.panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.panel__title {
+  font-size: 1.9rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.summary-card {
+  padding: 20px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.summary-card__label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+}
+
+.summary-card__value {
+  font-size: 2rem;
+  font-family: var(--font-title);
+}
+
+.summary-card--alert {
+  background: rgba(209, 77, 65, 0.08);
+  border-color: rgba(209, 77, 65, 0.18);
+}
+
+/* Cards do .dashboard */
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.insight-card {
+  padding: 20px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.insight-card--warning {
+  background: rgba(209, 77, 65, 0.05);
+  border-color: rgba(209, 77, 65, 0.16);
+}
+
+.insight-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.insight-card__header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.insight-list {
+  display: grid;
+  gap: 10px;
+}
+
+.insight-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.insight-item strong,
+.insight-item span {
+  display: block;
+}
+
+.insight-item small {
+  color: var(--muted);
+}
+
+.insight-item__value {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Formularios */
+.form-grid {
+  display: grid;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.form-grid--two-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background: #fff;
+  color: var(--text);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: 2px solid rgba(31, 111, 235, 0.18);
+  border-color: var(--accent);
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+/* Botoes principais */
+.button {
+  border: none;
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: var(--accent-strong);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+
+.button--ghost:hover {
+  background: rgba(31, 111, 235, 0.08);
+}
+
+.button--danger {
+  background: var(--danger);
+}
+
+.button--danger:hover {
+  background: #8f322b;
+}
+
+.button--small {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.feedback {
+  min-height: 24px;
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+.feedback[data-status="success"] {
+  color: var(--success);
+}
+
+.feedback[data-status="error"] {
+  color: var(--danger);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+.table th,
+.table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.table th {
+  color: var(--muted);
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.table td:last-child {
+  white-space: nowrap;
+}
+
+.table tr.row--low-stock td {
+  background: rgba(209, 77, 65, 0.05);
+}
+
+/* Status e tipo */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  padding: 8px 10px;
+  border-radius: 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.pill--entrada,
+.pill--ativo {
+  background: rgba(31, 157, 114, 0.12);
+  color: var(--success);
+}
+
+.pill--saida,
+.pill--revertida {
+  background: rgba(209, 77, 65, 0.12);
+  color: var(--danger);
+}
+
+.pill--warning {
+  background: rgba(255, 184, 77, 0.22);
+  color: #9a5d00;
+}
+
+.empty-state {
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-grid,
+  .insights-grid,
+  .form-grid--two-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  .dashboard {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .hero__status {
+    white-space: normal;
+  }
+}
