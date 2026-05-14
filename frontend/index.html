@@ -85,11 +85,17 @@
           </div>
 
           <form class="form-grid" id="form-categoria">
+            <input id="categoria-id" name="id" type="hidden" />
             <label class="field">
               <span>Nome da categoria</span>
               <input id="categoria-nome" name="nome" type="text" placeholder="Ex: Eletrônicos" required />
             </label>
-            <button class="button" type="submit">Salvar categoria</button>
+            <div class="form-actions">
+              <button class="button" id="categoria-submit" type="submit">Salvar categoria</button>
+              <button class="button button--ghost is-hidden" id="categoria-cancelar" type="button">
+                Cancelar edição
+              </button>
+            </div>
           </form>
 
           <p class="feedback" id="categoria-feedback"></p>

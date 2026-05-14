@@ -27,6 +27,9 @@ const elements = {
   categoriaForm: document.querySelector("#form-categoria"),
   categoriaFeedback: document.querySelector("#categoria-feedback"),
   categoriaTableBody: document.querySelector("#lista-categorias"),
+  categoriaIdInput: document.querySelector("#categoria-id"),
+  categoriaSubmitButton: document.querySelector("#categoria-submit"),
+  categoriaCancelButton: document.querySelector("#categoria-cancelar"),
   produtoForm: document.querySelector("#form-produto"),
   produtoFeedback: document.querySelector("#produto-feedback"),
   produtoTableBody: document.querySelector("#lista-produtos"),
@@ -159,6 +162,7 @@ async function refreshAll() {
     preencherSelectProdutos(produtos, elements.movimentacaoProdutoSelect);
     atualizarResumo({ categorias, produtos, movimentacoes });
     renderDashboard({ produtos, movimentacoes });
+    categoriaActions.setCategories(categorias);
     produtoActions.setProducts(produtos);
     return { categorias, produtos, movimentacoes };
   } catch (error) {
@@ -175,11 +179,14 @@ async function refreshAll() {
   }
 }
 
-bindCategoriaActions({
+const categoriaActions = bindCategoriaActions({
   form: elements.categoriaForm,
   feedback: elements.categoriaFeedback,
   tbody: elements.categoriaTableBody,
   refreshAll,
+  idInput: elements.categoriaIdInput,
+  submitButton: elements.categoriaSubmitButton,
+  cancelButton: elements.categoriaCancelButton,
 });
 
 const produtoActions = bindProdutoActions({
