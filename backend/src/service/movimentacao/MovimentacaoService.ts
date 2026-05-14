@@ -10,6 +10,19 @@ class MovimentacaoEstoqueInsuficienteError extends Error {}
 class MovimentacaoJaRevertidaError extends Error {}
 
 class MovimentacaoService {
+  private isMovimentacaoDeReversao(observacao?: string): boolean {
+    if (!observacao) {
+      return false;
+    }
+
+    const normalizedValue = observacao
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
+    return normalizedValue.startsWith("reversao da movimentacao ");
+  }
+
   private movimentacaoEstoqueEntSai(
     produto: Produto,
     tipo: "entrada" | "saida",
@@ -32,7 +45,7 @@ class MovimentacaoService {
 
     if (estoqueAtualizado < 0) {
       throw new MovimentacaoEstoqueInsuficienteError(
-        "Estoque insuficiente para realizar a saída",
+        "Estoque insuficiente para realizar a saida",
       );
     }
 
@@ -44,22 +57,26 @@ class MovimentacaoService {
   }
 
   async create(data: CreateMovimentacaoInput) {
-    return database.transaction(async (transactionManager) => { // salva tudo ou nada 
-      const produto = await transactionManager.getRepository(Produto).findOne({
+    return database.transaction(async (transactionManager) => {
+      const produtoRepository = transactionManager.getRepository(Produto);
+      const movimentacaoEstoqueRepository =
+        transactionManager.getRepository(MovimentacaoEstoque);
+
+      const produto = await produtoRepository.findOne({
         where: { id: data.produto_id },
-        relations: {
-          categoria: true,
+        lock: {
+          mode: "pessimistic_write",
         },
       });
 
       if (!produto) {
-        throw new MovimentacaoProdutoNotFoundError("Produto não encontrado.");
+        throw new MovimentacaoProdutoNotFoundError("Produto nao encontrado.");
       }
 
       this.movimentacaoEstoqueEntSai(produto, data.tipo, data.quantidade);
-      await transactionManager.getRepository(Produto).save(produto);
+      await produtoRepository.save(produto);
 
-      const movimentacao = transactionManager.getRepository(MovimentacaoEstoque).create({
+      const movimentacao = movimentacaoEstoqueRepository.create({
         tipo: data.tipo,
         quantidade: data.quantidade,
         observacao: data.observacao,
@@ -67,7 +84,7 @@ class MovimentacaoService {
         produto,
       });
 
-      return transactionManager.getRepository(MovimentacaoEstoque).save(movimentacao);
+      return movimentacaoEstoqueRepository.save(movimentacao);
     });
   }
 
@@ -79,7 +96,7 @@ class MovimentacaoService {
     const movimentacao = await movimentacaoRepository.findById(id);
 
     if (!movimentacao) {
-      throw new MovimentacaoNotFoundError("Movimentação não encontrada.");
+      throw new MovimentacaoNotFoundError("Movimentacao nao encontrada.");
     }
 
     return movimentacao;
@@ -87,48 +104,67 @@ class MovimentacaoService {
 
   async reverterMovimentacao(id: number) {
     return database.transaction(async (transactionManager) => {
-      const movimentacao = await transactionManager.getRepository(MovimentacaoEstoque).findOne({
+      const movimentacaoEstoqueRepository =
+        transactionManager.getRepository(MovimentacaoEstoque);
+      const produtoRepository = transactionManager.getRepository(Produto);
+
+      const movimentacao = await movimentacaoEstoqueRepository.findOne({
         where: { id },
-        relations: {
-          produto: {
-            categoria: true,
-          },
+        lock: {
+          mode: "pessimistic_write",
         },
       });
 
       if (!movimentacao) {
-        throw new MovimentacaoNotFoundError("Movimentação não encontrada.");
+        throw new MovimentacaoNotFoundError("Movimentacao nao encontrada.");
       }
 
       if (movimentacao.revertida) {
-        throw new MovimentacaoJaRevertidaError("Essa movimentação já foi revertida.");
+        throw new MovimentacaoJaRevertidaError("Essa movimentacao ja foi revertida.");
+      }
+
+      if (this.isMovimentacaoDeReversao(movimentacao.observacao)) {
+        throw new MovimentacaoJaRevertidaError(
+          "Movimentacoes de reversao nao podem ser revertidas novamente.",
+        );
+      }
+
+      const produto = await produtoRepository.findOne({
+        where: { id: movimentacao.produtoId },
+        lock: {
+          mode: "pessimistic_write",
+        },
+      });
+
+      if (!produto) {
+        throw new MovimentacaoProdutoNotFoundError("Produto nao encontrado.");
       }
 
       const tipoReverso = this.tipoReverso(movimentacao.tipo);
       this.movimentacaoEstoqueEntSai(
-        movimentacao.produto,
+        produto,
         tipoReverso,
         movimentacao.quantidade,
       );
 
-      await transactionManager.getRepository(Produto).save(movimentacao.produto);
+      await produtoRepository.save(produto);
 
       movimentacao.revertida = true;
-      await transactionManager.getRepository(MovimentacaoEstoque).save(movimentacao);
+      await movimentacaoEstoqueRepository.save(movimentacao);
 
       const observacaoReversao = movimentacao.observacao
-        ? `Reversão da movimentação ${movimentacao.id}. Observação original: ${movimentacao.observacao}`
-        : `Reversão da movimentação ${movimentacao.id}.`;
+        ? `Reversao da movimentacao ${movimentacao.id}. Observacao original: ${movimentacao.observacao}`
+        : `Reversao da movimentacao ${movimentacao.id}.`;
 
-      const novaMovimentacao = transactionManager.getRepository(MovimentacaoEstoque).create({
+      const novaMovimentacao = movimentacaoEstoqueRepository.create({
         tipo: tipoReverso,
         quantidade: movimentacao.quantidade,
         observacao: observacaoReversao,
         revertida: false,
-        produto: movimentacao.produto,
+        produto,
       });
 
-      return transactionManager.getRepository(MovimentacaoEstoque).save(novaMovimentacao);
+      return movimentacaoEstoqueRepository.save(novaMovimentacao);
     });
   }
 }
@@ -136,7 +172,9 @@ class MovimentacaoService {
 const movimentacaoService = new MovimentacaoService();
 
 export {
-  MovimentacaoEstoqueInsuficienteError, MovimentacaoJaRevertidaError, 
-  MovimentacaoNotFoundError, MovimentacaoProdutoNotFoundError, 
-  movimentacaoService
+  MovimentacaoEstoqueInsuficienteError,
+  MovimentacaoJaRevertidaError,
+  MovimentacaoNotFoundError,
+  MovimentacaoProdutoNotFoundError,
+  movimentacaoService,
 };

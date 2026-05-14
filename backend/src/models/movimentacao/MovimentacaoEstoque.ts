@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  RelationId,
 } from 'typeorm';
 
 import { Produto } from '../produto/Produto';
@@ -32,6 +33,9 @@ class MovimentacaoEstoque {
   @ManyToOne(() => Produto, (produto) => produto.movimentacoes, { nullable: false })
   @JoinColumn({ name: 'produto_id' })
   produto!: Produto;
+
+  @RelationId((movimentacao: MovimentacaoEstoque) => movimentacao.produto)
+  produtoId!: number;
 }
 
 export { MovimentacaoEstoque };
