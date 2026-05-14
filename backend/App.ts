@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import swaggerUi from "swagger-ui-express";
 
+import { ensureDefaultUser } from "./src/config/Bootstrap";
 import { initializeDatabase } from "./src/config/Database";
 import { swaggerSpec } from "./src/config/Swagger";
 import { errorHandler } from "./src/middlewares/ErrorHandler";
@@ -40,11 +41,20 @@ app.use("/api", router);
 app.use(errorHandler);
 
 app.get("/", (_req, res) => {
+  res.sendFile(path.join(frontendPath, "login.html"));
+});
+
+app.get("/login", (_req, res) => {
+  res.sendFile(path.join(frontendPath, "login.html"));
+});
+
+app.get("/app", (_req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 async function startServer(): Promise<void> {
   await initializeDatabase();
+  await ensureDefaultUser();
 
   app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
